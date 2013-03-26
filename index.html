@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>LambdaDriver by yuroyoro</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/yuroyoro/lambda_driver">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/yuroyoro/lambda_driver/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/yuroyoro/lambda_driver/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>LambdaDriver</h1>
+          <p>虚弦斥力場生成システム</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/yuroyoro">yuroyoro</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>LambdaDriver</h1>
+
+<p>虚弦斥力場生成システム</p>
+
+<p>LambdaDriver drives your code more functional.</p>
+
+<div class="highlight"><pre><span class="c1"># [:foo, :bar, :baz].map{|s| s.to_s }.map{|s| s.upcase }</span>
+<span class="c1"># [:foo, :bar, :baz].map(&amp;:to_s).map(&amp;:upcase)</span>
+
+<span class="o">[</span><span class="ss">:foo</span><span class="p">,</span> <span class="ss">:bar</span><span class="p">,</span> <span class="ss">:baz</span><span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span> <span class="o">&gt;&gt;</span> <span class="ss">:upcase</span> <span class="p">)</span> <span class="c1"># =&gt; ["FOO",  "BAR",  "BAZ"]</span>
+</pre></div>
+
+<div class="highlight"><pre><span class="c1"># [:foo, :hoge, :bar, :fuga].select{|s| s.to_s.length &gt; 3} # =&gt; [:hoge, :fuga]</span>
+
+<span class="o">[</span><span class="ss">:foo</span><span class="p">,</span> <span class="ss">:hoge</span><span class="p">,</span> <span class="ss">:bar</span><span class="p">,</span> <span class="ss">:fuga</span><span class="o">].</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span> <span class="o">&gt;&gt;</span> <span class="ss">:length</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="o">.</span><span class="n">_</span><span class="p">(:</span><span class="o">&lt;</span><span class="p">))</span> <span class="c1"># =&gt; [:hoge, :fuga]</span>
+</pre></div>
+
+<h2>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'lambda_driver'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install lambda_driver
+</code></pre>
+
+<h2>Usage</h2>
+
+<h3>Proc/lambda/Symbol/Method extensions</h3>
+
+<ul>
+<li>call</li>
+<li>compose</li>
+<li>with_args</li>
+<li>flip</li>
+<li>curry</li>
+</ul><h4>alias :&lt; to Proc#call</h4>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+  <span class="n">f</span> <span class="o">&lt;</span> <span class="ss">:foo</span> <span class="c1"># =&gt; "foo"</span>
+</pre></div>
+
+<h4>Proc#compose</h4>
+
+<p>Returns new lambda which composed self and given function.
+A composed proc called with args, executes `self.(g(*args)).</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">length</span> <span class="p">}</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span> <span class="n">compose</span> <span class="n">g</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:hoge</span><span class="p">)</span> <span class="c1"># =&gt; 4</span>
+</pre></div>
+
+<p>This method is aliased as <code>&lt;&lt;</code>.</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span> <span class="c1"># =&gt; f.compose(g)</span>
+</pre></div>
+
+<h4>Proc#with_args</h4>
+
+<p>Returns partially applied function that has 2nd and more parameters
+fixed by given *args.</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span> <span class="c1"># =&gt; [:c, :a, :b]</span>
+</pre></div>
+
+<p>This method is aliased as <code>*</code>.</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">*</span> <span class="ss">:foo</span>  <span class="c1"># =&gt; f.with_args(:foo)</span>
+</pre></div>
+
+<h4>Proc#flip</h4>
+
+<p>Returns function whose parameter order spawed 1st for 2nd.
+A result of filped fuction is curried by Proc#curry.</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">flip</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span> <span class="c1"># =&gt; [:b, :a, :c]</span>
+</pre></div>
+
+<p>If arguments is var-args, pass explicitly arity to curring.</p>
+
+<div class="highlight"><pre>  <span class="nb">p</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span><span class="o">|*</span><span class="n">args</span><span class="o">|</span> <span class="n">args</span><span class="o">.</span><span class="n">inspect</span> <span class="p">}</span>
+  <span class="nb">p</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>      <span class="c1"># =&gt; "[:b, :a, :c]"</span>
+  <span class="nb">p</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:d</span><span class="p">)</span> <span class="c1"># =&gt; "[:b, :a, :c, :d]"</span>
+</pre></div>
+
+<p>If arity is 0 or 1, flip returns itself.</p>
+
+<p>This method is aliased as <code>~@</code>.</p>
+
+<div class="highlight"><pre>  <span class="o">~</span><span class="n">f</span> <span class="c1"># =&gt; f.filp</span>
+</pre></div>
+
+
+
+
+
+<h3>Class extensions</h3>
+
+<ul>
+<li>alias instance_method, :/</li>
+</ul><div class="highlight"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
+</pre></div>
+
+<h3>UnboundMethod extensions</h3>
+
+<ul>
+<li>alias bind, :&lt;</li>
+</ul><div class="highlight"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span>                    <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
+  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span>      <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
+  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="mi">3</span>  <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+</pre></div>
+
+<h3>Combinators</h3>
+
+
+
+<ul>
+<li>ski combinator</li>
+</ul><h3>Object extensions</h3>
+
+<ul>
+<li>ap(|&gt;) :  obj.ap(f) =&gt; f.call(obj)</li>
+<li>obj._.method : returns obj.method(method) or lamdba{|*args| obj.send(method, *args) }
+&lt;!-- - obj.disjunction(f) : if f(self) is nil, return self else return f(self) --&gt;</li>
+</ul><h4>Object#ap</h4>
+
+<p><code>Object#ap</code> is applies self to given proc/block.</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
+  <span class="s2">"foo"</span><span class="o">.</span><span class="n">ap</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#  =&gt; "fooffoo"</span>
+</pre></div>
+
+<h4>Object#_</h4>
+
+<p>Object#op is shortcut to quickly extract Method object.</p>
+
+<div class="highlight"><pre><span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span>         <span class="c1">#=&gt; #&lt;Method: String#index&gt;</span>
+<span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+
+<span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;Method: Fixnum#&gt;=&gt;</span>
+<span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">))</span> <span class="c1"># =&gt; [1, 2]( = [1, 2].select{|n| 2 &gt;= n})</span>
+</pre></div>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
