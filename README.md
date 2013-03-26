@@ -42,7 +42,7 @@ Combinators
 
 Object extensions
 <!-- - applying(|>) :  obj.ap(f) => f.call(obj) -->
-<!-- - obj.op(:==) : returns lambda{|v| obj == v} -->
+- obj.op(:==) : returns lambda{|v| obj == v}
 <!-- - obj._.method : returns lamdba{|*args| obj.send(method, *args) } -->
 <!-- - obj.disjunction(f) : if f(self) is nil, return self else return f(self) -->
 
