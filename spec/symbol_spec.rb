@@ -55,9 +55,9 @@ describe Symbol do
     it_should_behave_like 'aliases'
 
     it_should_behave_like 'aliases(varargs)' do
-      subject { :product }
-      let(:x) { [:bar] }
-      let(:y) { [:foo] }
+      subject { :delete}
+      let(:x) { :bar }
+      let(:y) { 'a' }
     end
   end
 
@@ -80,7 +80,7 @@ describe Symbol do
     }
 
     it('-:symbol.to_method.call(obj).call(x) should be obj.method(symbol).call(x)'){
-      -:index.call(obj).call("bar").should == obj.method(:index).call("bar")
+      (-:index).call(obj).call("bar").should == obj.method(:index).call("bar")
     }
   end
 end
