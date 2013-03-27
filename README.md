@@ -139,18 +139,35 @@ This method is aliased as `~@`.
 
 ### Symbol extensions
 - to_method
+- to_method_with_args
 
 #### Symbol#to_method
 
-Symbol#to_method generates a function that extract Method object from given arguments.
+Symbol#to_method generates a function that extract Method object from given argument.
 This method is aliased as `-@`.
 
 ```ruby
   (-:index).call("foobarbaz")             # => #<Method: String#index>
-  (-:index).call("foobarbaz").call("bar") # => 3 (== "foobarbaz".index(3) )
+  (-:index).call("foobarbaz").call("bar") # => 3 (== "foobarbaz".index("bar") )
 
   -:index < "foobarbaz"         # => #<Method: String#index>
-  -:index < "foobarbaz" < "bar" # => 3 (== "foobarbaz".index(3) )
+  -:index < "foobarbaz" < "bar" # => 3 (== "foobarbaz".index("bar") )
+```
+
+#### Symbol#to_method_with_args
+
+Symbol#to_method_with_args generates a function that extract Method object from given object,
+and returns function is partially applied parameters by passed arguments.
+It is same as Symbol#to_method with Proc#with_args.
+
+This method is aliased as `&`.
+
+```ruby
+  :index.to_method_with_args("bar")                   #  => #<Proc:0x007ffef4886ff8
+  :index.to_method_with_args("bar").call("foobarbaz") #  => 3 (== "foobarbaz".index("bar") )
+
+  :index & "bar"               #  => #<Proc:0x007ffef4886ff8
+  :index & "bar" < "foobarbaz" #  => 3 (== "foobarbaz".index("bar") )
 ```
 
 ### Class extensions
@@ -166,7 +183,7 @@ This method is aliased as `-@`.
 ```ruby
   String / :index                    # => #<UnboundMethod: String#index>
   String / :index < "foobarbaz"      # => #<Method: String#index>
-  String / :index < "foobarbaz" < 3  # => 3 (== "foobarbaz".index(3) )
+  String / :index < "foobarbaz" < 3  # => 3 (== "foobarbaz".index("bar") )
 ```
 
 ### Combinators
@@ -174,7 +191,7 @@ This method is aliased as `-@`.
 - ski combinator
 
 ### Object extensions
-- obj.ap(|>)
+- obj.revapply(|>)
 - obj._
 - obj.disjunction(f)
 
@@ -194,7 +211,7 @@ Object#_ is shortcut to quickly extract Method object.
 
 ```ruby
 "foobarbaz"._.index         # => #<Method: String#index>
-"foobarbaz"._.index < "bar" # => 3 (== "foobarbaz".index(3) )
+"foobarbaz"._.index < "bar" # => 3 (== "foobarbaz".index("bar") )
 
 2._(:>=)                    # => #<Method: Fixnum#>=>
 [1, 2, 3].select(&2._(:>=)) # => [1, 2]( = [1, 2].select{|n| 2 >= n})
