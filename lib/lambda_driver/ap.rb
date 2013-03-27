@@ -4,10 +4,6 @@ module LambdaDriver::Ap
       return lambda{|g=nil,&inner_block| self.ap(g, &inner_block) }
     end
 
-    if block_given?
-      yield self
-    else
-      f.call(self)
-    end
+    block_given? ?  (yield self) : f.call(self)
   end
 end

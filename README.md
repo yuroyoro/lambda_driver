@@ -167,9 +167,9 @@ This method is aliased as `-@`.
 - ski combinator
 
 ### Object extensions
-- ap(|>) :  obj.ap(f) => f.call(obj)
-- obj._.method : returns obj.method(method) or lambda{|*args| obj.send(method, *args) }
-<!-- - obj.disjunction(f) : if f(self) is nil, return self else return f(self) -->
+- obj.ap(|>)
+- obj._
+- obj.disjunction(f)
 
 #### Object#ap
 
@@ -191,6 +191,18 @@ Object#_ is shortcut to quickly extract Method object.
 
 2._(:>=)                    # => #<Method: Fixnum#>=>
 [1, 2, 3].select(&2._(:>=)) # => [1, 2]( = [1, 2].select{|n| 2 >= n})
+```
+
+#### Object#disjunction
+
+`Object#disjunction` select self or result of applied self to given function.
+if f(self) is nil, returns self, otherwise return f(self).
+
+```ruby
+  f = lambda{|x| x % 2 == 0 ? nil : x * 2}
+
+  2.disjunction(f) # => 2 (disjunction returns reciever object)
+  3.disjunction(f) # => 6 (disjunction returns f(3) )
 ```
 
 ## Contributing
