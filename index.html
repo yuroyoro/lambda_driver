@@ -172,16 +172,32 @@ A result of filped fuction is curried by Proc#curry.</p>
 
 <ul>
 <li>to_method</li>
+<li>to_method_with_args</li>
 </ul><h4>Symbol#to_method</h4>
 
-<p>Symbol#to_method generates a function that extract Method object from given arguments.
+<p>Symbol#to_method generates a function that extract Method object from given argument.
 This method is aliased as <code>-@</code>.</p>
 
 <div class="highlight"><pre>  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span>             <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
-  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 
   <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
-  <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+  <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
+</pre></div>
+
+<h4>Symbol#to_method_with_args</h4>
+
+<p>Symbol#to_method_with_args generates a function that extract Method object from given object,
+and returns function is partially applied parameters by passed arguments.
+It is same as Symbol#to_method with Proc#with_args.</p>
+
+<p>This method is aliased as <code>&amp;</code>.</p>
+
+<div class="highlight"><pre>  <span class="ss">:index</span><span class="o">.</span><span class="n">to_method_with_args</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span>                   <span class="c1">#  =&gt; #&lt;Proc:0x007ffef4886ff8</span>
+  <span class="ss">:index</span><span class="o">.</span><span class="n">to_method_with_args</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span> <span class="c1">#  =&gt; 3 (== "foobarbaz".index("bar") )</span>
+
+  <span class="ss">:index</span> <span class="o">&amp;</span> <span class="s2">"bar"</span>               <span class="c1">#  =&gt; #&lt;Proc:0x007ffef4886ff8</span>
+  <span class="ss">:index</span> <span class="o">&amp;</span> <span class="s2">"bar"</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="c1">#  =&gt; 3 (== "foobarbaz".index("bar") )</span>
 </pre></div>
 
 <h3>Class extensions</h3>
@@ -197,7 +213,7 @@ This method is aliased as <code>-@</code>.</p>
 <li>alias bind, :&lt;</li>
 </ul><div class="highlight"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span>                    <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
   <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span>      <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
-  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="mi">3</span>  <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="mi">3</span>  <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 </pre></div>
 
 <h3>Combinators</h3>
@@ -209,7 +225,7 @@ This method is aliased as <code>-@</code>.</p>
 </ul><h3>Object extensions</h3>
 
 <ul>
-<li>obj.ap(|&gt;)</li>
+<li>obj.revapply(|&gt;)</li>
 <li>obj._</li>
 <li>obj.disjunction(f)</li>
 </ul><h4>Object#revapply</h4>
@@ -226,7 +242,7 @@ This method is aliased as <code>-@</code>.</p>
 <p>Object#_ is shortcut to quickly extract Method object.</p>
 
 <div class="highlight"><pre><span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
-<span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+<span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 
 <span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">)</span>                    <span class="c1"># =&gt; #&lt;Method: Fixnum#&gt;=&gt;</span>
 <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">))</span> <span class="c1"># =&gt; [1, 2]( = [1, 2].select{|n| 2 &gt;= n})</span>
