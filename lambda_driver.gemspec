@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["ozaki@yuroyoro.com"]
   gem.description   = %q{Drives your code more functioal!}
   gem.summary       = %q{Drives your code more functioal!}
-  gem.homepage      = ""
+  gem.homepage      = "http://yuroyoro.github.com/lambda_driver/"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

@@ -17,6 +17,9 @@ LambdaDriver drives your code more functional.
 [:foo, :hoge, :bar, :fuga].select(&:to_s >> :length >> 3._(:<)) # => [:hoge, :fuga]
 ```
 
+- [project page](http://yuroyoro.github.com/lambda_driver/)
+- [rubygems.org](https://rubygems.org/gems/lambda_driver)
+
 ## Installation
 
 Add this line to your application's Gemfile:
