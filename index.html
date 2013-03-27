@@ -84,8 +84,14 @@
 <li>curry</li>
 </ul><h4>alias :&lt; to Proc#call</h4>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
   <span class="n">f</span> <span class="o">&lt;</span> <span class="ss">:foo</span> <span class="c1"># =&gt; "foo"</span>
+</pre></div>
+
+<h4>alias :+@ to Proc#to_proc</h4>
+
+<div class="highlight"><pre>  <span class="o">+</span><span class="ss">:to_s</span>           <span class="c1"># =&gt; #&lt;Proc:0x007ff78aadaa78&gt;</span>
+  <span class="o">+</span><span class="ss">:to_s</span> <span class="o">&lt;</span> <span class="ss">:foo</span>    <span class="c1"># =&gt; "foo"</span>
 </pre></div>
 
 <h4>Proc#compose</h4>
@@ -93,45 +99,55 @@
 <p>Returns new lambda which composed self and given function.
 A composed proc called with args, executes `self.(g(*args)).</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
   <span class="n">g</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">length</span> <span class="p">}</span>
-  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span> <span class="n">compose</span> <span class="n">g</span>
-  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:hoge</span><span class="p">)</span> <span class="c1"># =&gt; 4</span>
+
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">compose</span> <span class="n">g</span>  <span class="c1"># =&gt; #&lt;Proc:0x007ff78aa2ab2&gt;</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:hoge</span><span class="p">)</span>        <span class="c1"># =&gt; "44" ( == f.call(g.call(:hoge)) )</span>
 </pre></div>
 
 <p>This method is aliased as <code>&lt;&lt;</code>.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span> <span class="c1"># =&gt; f.compose(g)</span>
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span>          <span class="c1"># =&gt; f.compose(g)</span>
+  <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span> <span class="o">&lt;</span> <span class="ss">:hoge</span>  <span class="c1"># =&gt; "44" ( == f.call(g.call(:hoge)) )</span>
 </pre></div>
 
 <h4>Proc#with_args</h4>
 
-<p>Returns partially applied function that has 2nd and more parameters
+<p>Returns partially applied function that has 2nd and more parameters are
 fixed by given *args.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
-  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span>
-  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span> <span class="c1"># =&gt; [:c, :a, :b]</span>
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
+
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span>   <span class="c1"># =&gt; #&lt;Proc:0x007ff78a9c5ca0&gt;</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>                    <span class="c1"># =&gt; [:c, :a, :b] ( == f.call(:c, :a, :b) )</span>
 </pre></div>
 
 <p>This method is aliased as <code>*</code>.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">*</span> <span class="ss">:foo</span>  <span class="c1"># =&gt; f.with_args(:foo)</span>
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">]</span><span class="p">}</span>
+
+  <span class="n">f</span> <span class="o">*</span> <span class="ss">:foo</span>          <span class="c1"># =&gt; #&lt;Proc:0x007ff78a987540&gt; (== f.with_args(:foo) )</span>
+  <span class="n">f</span> <span class="o">*</span> <span class="ss">:foo</span> <span class="o">&lt;</span> <span class="ss">:bar</span>   <span class="c1"># =&gt; [:bar,  :foo] ( == f.with_args(:foo).call(:bar) )</span>
 </pre></div>
 
 <h4>Proc#flip</h4>
 
-<p>Returns function whose parameter order spawed 1st for 2nd.
+<p>Returns function whose parameter order swaped 1st for 2nd.
 A result of filped fuction is curried by Proc#curry.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="n">lamdba</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
-  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">flip</span>
-  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span> <span class="c1"># =&gt; [:b, :a, :c]</span>
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
+
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">flip</span>                    <span class="c1"># =&gt; #&lt;Proc:0x007ff78a942fa&gt;</span>
+  <span class="n">h</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>  <span class="c1"># =&gt; [:b, :a, :c] (== f.curry.call(:b).call(:a).call(:b))</span>
+  <span class="n">h</span> <span class="o">&lt;</span> <span class="ss">:a</span> <span class="o">&lt;</span> <span class="ss">:b</span> <span class="o">&lt;</span> <span class="ss">:c</span>              <span class="c1"># =&gt; [:b, :a, :c] (== f.curry.call(:b).call(:a).call(:b))</span>
 </pre></div>
 
 <p>If arguments is var-args, pass explicitly arity to curring.</p>
 
 <div class="highlight"><pre>  <span class="nb">p</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span><span class="o">|*</span><span class="n">args</span><span class="o">|</span> <span class="n">args</span><span class="o">.</span><span class="n">inspect</span> <span class="p">}</span>
+
+  <span class="nb">p</span><span class="o">.</span><span class="n">arity</span>                           <span class="c1"># =&gt; -1</span>
   <span class="nb">p</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>      <span class="c1"># =&gt; "[:b, :a, :c]"</span>
   <span class="nb">p</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:d</span><span class="p">)</span> <span class="c1"># =&gt; "[:b, :a, :c, :d]"</span>
 </pre></div>
@@ -140,12 +156,26 @@ A result of filped fuction is curried by Proc#curry.</p>
 
 <p>This method is aliased as <code>~@</code>.</p>
 
-<div class="highlight"><pre>  <span class="o">~</span><span class="n">f</span> <span class="c1"># =&gt; f.filp</span>
+<div class="highlight"><pre>  <span class="o">~</span><span class="n">f</span> <span class="c1"># =&gt;             #&lt;Proc:0x007ff78a8e22c&gt; (== f.filp)</span>
+  <span class="o">~</span><span class="n">f</span> <span class="o">&lt;</span> <span class="ss">:a</span> <span class="o">&lt;</span> <span class="ss">:b</span> <span class="o">&lt;</span> <span class="ss">:c</span>   <span class="c1"># =&gt; [:b, :a, :c] (== f.filp.call(:b).call(:a).call(:b))</span>
+
 </pre></div>
 
+<h3>Symbol extensions</h3>
 
+<ul>
+<li>to_method</li>
+</ul><h4>Symbol#to_method</h4>
 
+<p>Symbol#to_method generates a function that extract Method object from given arguments.
+This method is aliased as <code>-@</code>.</p>
 
+<div class="highlight"><pre>  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span>             <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
+  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+
+  <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
+  <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
+</pre></div>
 
 <h3>Class extensions</h3>
 
@@ -172,26 +202,38 @@ A result of filped fuction is curried by Proc#curry.</p>
 </ul><h3>Object extensions</h3>
 
 <ul>
-<li>ap(|&gt;) :  obj.ap(f) =&gt; f.call(obj)</li>
-<li>obj._.method : returns obj.method(method) or lamdba{|*args| obj.send(method, *args) }
-&lt;!-- - obj.disjunction(f) : if f(self) is nil, return self else return f(self) --&gt;</li>
-</ul><h4>Object#ap</h4>
+<li>obj.ap(|&gt;)</li>
+<li>obj._</li>
+<li>obj.disjunction(f)</li>
+</ul><h4>Object#revapply</h4>
 
-<p><code>Object#ap</code> is applies self to given proc/block.</p>
+<p><code>Object#revapply</code> is applies self to given proc/block.</p>
 
 <div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
-  <span class="s2">"foo"</span><span class="o">.</span><span class="n">ap</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#  =&gt; "fooffoo"</span>
+
+  <span class="s2">"foo"</span><span class="o">.</span><span class="n">revapply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#  =&gt; "fooffoo" (== f.call("foo") )</span>
 </pre></div>
 
 <h4>Object#_</h4>
 
-<p>Object#op is shortcut to quickly extract Method object.</p>
+<p>Object#_ is shortcut to quickly extract Method object.</p>
 
-<div class="highlight"><pre><span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span>         <span class="c1">#=&gt; #&lt;Method: String#index&gt;</span>
+<div class="highlight"><pre><span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
 <span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index(3) )</span>
 
-<span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;Method: Fixnum#&gt;=&gt;</span>
+<span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">)</span>                    <span class="c1"># =&gt; #&lt;Method: Fixnum#&gt;=&gt;</span>
 <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">))</span> <span class="c1"># =&gt; [1, 2]( = [1, 2].select{|n| 2 &gt;= n})</span>
+</pre></div>
+
+<h4>Object#disjunction</h4>
+
+<p><code>Object#disjunction</code> select self or result of applied self to given function.
+if f(self) is nil, returns self, otherwise return f(self).</p>
+
+<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="kp">nil</span> <span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span>
+
+  <span class="mi">2</span><span class="o">.</span><span class="n">disjunction</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># =&gt; 2 (disjunction returns reciever object)</span>
+  <span class="mi">3</span><span class="o">.</span><span class="n">disjunction</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># =&gt; 6 (disjunction returns f(3) )</span>
 </pre></div>
 
 <h2>Contributing</h2>
