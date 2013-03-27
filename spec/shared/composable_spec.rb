@@ -182,12 +182,20 @@ shared_examples_for 'aliases' do
   }
 end
 
+  # require 'lambda_driver'
+  # x, y, g = [:foo, 12, lambda{|x| (x.to_s * 2).to_s + "_g" }]
+  # subject = Proc.new{|*x| x]
+
 shared_examples_for 'aliases(varargs)' do
   let(:x) { :foo }
   let(:y) { 12 }
   let(:g) { lambda{|x| (x.to_s * 2).to_s + "_g" } }
 
-  it('(f % 2 * y << g < x) should be f.curry(2).with_args(y).compose(g).call(x)'){
-    (subject % 2 * y << g < x).should == subject.curry(2).with_args(y).compose(g).call(x)
+  it('(f % 2 * y << g < x) should be f.curry(2).compose(g).call(x)'){
+    ((subject % 2 < y) << g < x).should == subject.curry(2).call(y).compose(g).call(x)
+  }
+
+  it('(f.flip(2) * y << g < x) should be f.flip(2).compose(g).call(x)'){
+    ((subject.flip(2) < y) << g < x).should == subject.flip(2).call(y).compose(g).call(x)
   }
 end

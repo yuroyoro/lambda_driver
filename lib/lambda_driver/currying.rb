@@ -1,7 +1,7 @@
 module LambdaDriver::Currying
-  def curry
+  def curry(arity = nil)
     f = self.to_proc
-    arity = __arity(f)
+    arity ||= __arity(f)
     return f if arity == 0
 
     lambda{|arg| __curry(f, arity, arg, []) }
