@@ -1,4 +1,4 @@
-# LambdaDriver [![Build Status](https://travis-ci.org/yuroyoro/lambda_driver.png)](https://travis-ci.org/yuroyoro/lambda_driver)
+# LambdaDriver
 
 虚弦斥力場生成システム
 
@@ -19,6 +19,10 @@ LambdaDriver drives your code more functional.
 
 - [project page](http://yuroyoro.github.com/lambda_driver/)
 - [rubygems.org](https://rubygems.org/gems/lambda_driver)
+
+## Build status
+
+[![Build Status](https://travis-ci.org/yuroyoro/lambda_driver.png)](https://travis-ci.org/yuroyoro/lambda_driver)
 
 ## Installation
 
