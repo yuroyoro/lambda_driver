@@ -8,7 +8,7 @@ describe LambdaDriver::Revapply do
     context 'given none' do
       subject { object.revapply }
 
-      it { should be_a_kind_of Proc }
+      it { should be_a_kind_of Method }
       it('obj.revapply.call(f) should be f.call(obj)'){
         subject.call(f).should == f.call(object)
       }

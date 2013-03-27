@@ -9,7 +9,7 @@ describe LambdaDriver::Disjunction do
       context 'given none' do
         subject { obj.disjunction }
 
-        it { should be_a_kind_of Proc }
+        it { should be_a_kind_of Method }
 
         it('obj.disjunction.call(f) should be obj'){
           subject.call(lambda{|x| nil}).should == obj
@@ -45,7 +45,7 @@ describe LambdaDriver::Disjunction do
       context 'given none' do
         subject { obj.disjunction }
 
-        it { should be_a_kind_of Proc }
+        it { should be_a_kind_of Method }
 
         it('obj.disjunction.call(f) should be obj'){
           subject.call(f).should == f.call(obj)
