@@ -60,4 +60,27 @@ describe Symbol do
       let(:y) { [:foo] }
     end
   end
+
+  describe '#to_method' do
+    subject { :index.to_method }
+
+    let(:obj) { "foobarbaz" }
+
+    it { should be_a_kind_of Proc }
+    it('symbol.to_method.call(obj) should returns Method'){
+      subject.call(obj).should be_a_kind_of Method
+    }
+
+    it('symbol.to_method.call(obj).call(x) should be obj.method(symbol).call(x)'){
+      subject.call(obj).call("bar").should == obj.method(:index).call("bar")
+    }
+
+    it('-:symbol.to_method.call(obj) should returns Method'){
+      (-:index).call(obj).should be_a_kind_of Method
+    }
+
+    it('-:symbol.to_method.call(obj).call(x) should be obj.method(symbol).call(x)'){
+      -:index.call(obj).call("bar").should == obj.method(:index).call("bar")
+    }
+  end
 end
