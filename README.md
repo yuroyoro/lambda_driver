@@ -1,4 +1,4 @@
-# LambdaDriver
+# LambdaDriver [![Build Status](https://travis-ci.org/yuroyoro/lambda_driver.png)](https://travis-ci.org/yuroyoro/lambda_driver)
 
 虚弦斥力場生成システム
 
