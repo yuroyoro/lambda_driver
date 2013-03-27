@@ -171,14 +171,14 @@ This method is aliased as `-@`.
 - obj._
 - obj.disjunction(f)
 
-#### Object#ap
+#### Object#revapply
 
-`Object#ap` is applies self to given proc/block.
+`Object#revapply` is applies self to given proc/block.
 
 ```ruby
   f = lambda{|x| x * 2 }
 
-  "foo".ap(f) #  => "fooffoo" (== f.call("foo") )
+  "foo".revapply(f) #  => "fooffoo" (== f.call("foo") )
 ```
 
 #### Object#_
