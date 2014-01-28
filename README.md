@@ -82,6 +82,31 @@ This method is aliased as `<<`.
   f << g < :hoge  # => "44" ( == f.call(g.call(:hoge)) )
 ```
 
+
+#### Proc#compose_with_lifting
+
+compose self and give fuction with checking g(x) is mzero.
+if g(x) is mzero, it does not call self and return g(x),
+otherwise returns f(g(x)).
+
+mzero means the object is nil or emtpy
+
+```ruby
+   hash = {:a => "foo"}
+   f = lambda{|y| y.length }
+   g = lambda{|y| hash[y]}
+   h = f.compose_with_lifting g
+   h.(:a) # => 3
+   h.(:b) # => nil (it does not called f)
+```
+
+This method is aliased as `<=`.
+
+```ruby
+  f <= g # => f.compose_with_lifting(g)
+```
+
+
 #### Proc#with_args
 
 Returns partially applied function that has 2nd and more parameters are

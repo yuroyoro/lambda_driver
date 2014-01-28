@@ -7,6 +7,12 @@ describe 'lambda' do
     it_should_behave_like 'composable'
   end
 
+  describe '#compose_with_lifting' do
+    subject { lambda{|x| x.mzero? ? x : x.to_s} }
+
+    it_should_behave_like 'liftable'
+  end
+
   describe '#with_args' do
     subject { lambda{|x, y, *z| [x, y] + z.to_a } }
     it_should_behave_like 'with_args'
