@@ -46,7 +46,7 @@ describe Symbol do
   describe '#call' do
     subject { :to_s }
 
-    it_should_behave_like 'call'
+    it_should_behave_like 'call(<)'
   end
 
   describe 'ailases' do

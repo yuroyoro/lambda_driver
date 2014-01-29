@@ -54,6 +54,7 @@ describe Proc do
     subject { Proc.new{|x| x.to_s + "_f"} }
 
     it_should_behave_like 'call'
+    it_should_behave_like 'call(<)'
   end
 
   describe 'ailases' do

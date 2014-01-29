@@ -74,6 +74,9 @@ describe Method do
     it_should_behave_like 'call' do
       let(:x) { "foo" }
     end
+    it_should_behave_like 'call(<)' do
+      let(:x) { "foo" }
+    end
   end
 
   describe 'ailases' do

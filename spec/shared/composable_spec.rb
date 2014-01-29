@@ -93,7 +93,7 @@ shared_examples_for 'flip(arity=1)' do
   }
 
   it(' f.flip.call(x) returns proc ') {
-    subject.flip.call(y) == subject.call(y)
+    subject.flip.to_proc.call(y) == subject.to_proc.call(y)
   }
 end
 
@@ -106,7 +106,7 @@ shared_examples_for 'flip(varargs)' do
   }
 
   it('f.flip(2).call(x) returns proc ') {
-    subject.flip(2).call(y) == subject.call(y)
+    subject.flip(2).call(y) == subject.to_proc.call(y)
   }
 
   it('~f.flip(2).call(x).call(y) should be f.call(y,x)'){
@@ -151,16 +151,21 @@ end
 
 shared_examples_for 'call' do
   it { should respond_to :call}
-  it { should respond_to :<}
 
   let(:x) { :foo }
 
   it('f.call(x) == f.call(x)'){
     subject.call(x).should == subject.call(x)
   }
+end
+
+shared_examples_for 'call(<)' do
+  it { should respond_to :<}
+
+  let(:x) { :foo }
 
   it('(f < x) == f.call(x)'){
-    (subject < x).should == subject.call(x)
+    (subject < x).should == subject.to_proc.call(x)
   }
 end
 
@@ -170,7 +175,7 @@ shared_examples_for 'aliases' do
   let(:g) { lambda{|x| (x.to_s * 2).to_s + "_g" } }
 
   it('(~f < x) should be f.flip.call(x)'){
-    (~subject < x).should == subject.flip.call(x)
+    (~subject < x).should == subject.flip.to_proc.call(x)
   }
 
   it('(f << g < x) should f.compose(g).call(x)'){
