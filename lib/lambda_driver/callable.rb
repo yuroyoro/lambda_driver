@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Callable
 
   def <(*args, &block)

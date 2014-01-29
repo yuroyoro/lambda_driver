@@ -1,5 +1,5 @@
+# -*- encoding : utf-8 -*-
 require "lambda_driver/version"
-
 Dir["#{File.dirname(__FILE__)}/lambda_driver/*.rb"].sort.each do |path|
   next if File.basename(path, '.rb') == 'core_ext'
   require "lambda_driver/#{File.basename(path, '.rb')}"

@@ -1,5 +1,5 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Currying
-
 
   if RUBY_VERSION < '1.9.0'
     def curry(arity = nil)

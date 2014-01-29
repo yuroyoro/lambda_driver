@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Liftable
 
   # compose self and give fuction with checking g(x) is mzero.

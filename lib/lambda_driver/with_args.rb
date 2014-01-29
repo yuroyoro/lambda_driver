@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::WithArgs
 
   # Returns partially applied function that has 2nd and more parameters

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Composable
   # Returns new lambda which composed self and given function.
   # A composed proc called with args, executes `self.(g(*args)).

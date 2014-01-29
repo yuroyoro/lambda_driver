@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Symbol
   include LambdaDriver::Callable
   include LambdaDriver::Composable

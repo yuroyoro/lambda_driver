@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Revapply
   def revapply(f = nil, &block)
     if f.nil? && (not block_given?)

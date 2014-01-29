@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Disjunction
   def disjunction(f = nil, &block)
     if f.nil? && (not block_given?)

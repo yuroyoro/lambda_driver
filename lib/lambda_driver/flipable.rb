@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Flipable
   # Returns function whose parameter order spawed 1st for 2nd.
   # A result of filped fuction is curried by Proc#curry.

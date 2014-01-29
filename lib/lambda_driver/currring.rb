@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module LambdaDriver::Curring
   def curry(arity = nil)
     self.to_proc.curry(arity)
