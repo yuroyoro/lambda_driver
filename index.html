@@ -35,22 +35,23 @@
           <p>虚弦斥力場生成システム</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/yuroyoro">yuroyoro</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h1>LambdaDriver</h1>
+        <h1>
+<a name="lambdadriver" class="anchor" href="#lambdadriver"><span class="octicon octicon-link"></span></a>LambdaDriver</h1>
 
 <p>虚弦斥力場生成システム</p>
 
 <p>LambdaDriver drives your code more functional.</p>
 
-<div class="highlight"><pre><span class="c1"># [:foo, :bar, :baz].map{|s| s.to_s }.map{|s| s.upcase }</span>
+<div class="highlight highlight-ruby"><pre><span class="c1"># [:foo, :bar, :baz].map{|s| s.to_s }.map{|s| s.upcase }</span>
 <span class="c1"># [:foo, :bar, :baz].map(&amp;:to_s).map(&amp;:upcase)</span>
 
 <span class="o">[</span><span class="ss">:foo</span><span class="p">,</span> <span class="ss">:bar</span><span class="p">,</span> <span class="ss">:baz</span><span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span> <span class="o">&gt;&gt;</span> <span class="ss">:upcase</span> <span class="p">)</span> <span class="c1"># =&gt; ["FOO",  "BAR",  "BAZ"]</span>
 </pre></div>
 
-<div class="highlight"><pre><span class="c1"># [:foo, :hoge, :bar, :fuga].select{|s| s.to_s.length &gt; 3} # =&gt; [:hoge, :fuga]</span>
+<div class="highlight highlight-ruby"><pre><span class="c1"># [:foo, :hoge, :bar, :fuga].select{|s| s.to_s.length &gt; 3} # =&gt; [:hoge, :fuga]</span>
 
 <span class="o">[</span><span class="ss">:foo</span><span class="p">,</span> <span class="ss">:hoge</span><span class="p">,</span> <span class="ss">:bar</span><span class="p">,</span> <span class="ss">:fuga</span><span class="o">].</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span> <span class="o">&gt;&gt;</span> <span class="ss">:length</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="o">.</span><span class="n">_</span><span class="p">(:</span><span class="o">&lt;</span><span class="p">))</span> <span class="c1"># =&gt; [:hoge, :fuga]</span>
 </pre></div>
@@ -58,11 +59,13 @@
 <ul>
 <li><a href="http://yuroyoro.github.com/lambda_driver/">project page</a></li>
 <li><a href="https://rubygems.org/gems/lambda_driver">rubygems.org</a></li>
-</ul><h2>Build status</h2>
+</ul><h2>
+<a name="build-status" class="anchor" href="#build-status"><span class="octicon octicon-link"></span></a>Build status</h2>
 
 <p><a href="https://travis-ci.org/yuroyoro/lambda_driver"><img src="https://travis-ci.org/yuroyoro/lambda_driver.png" alt="Build Status"></a></p>
 
-<h2>Installation</h2>
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>Add this line to your application's Gemfile:</p>
 
@@ -79,9 +82,11 @@
 <pre><code>$ gem install lambda_driver
 </code></pre>
 
-<h2>Usage</h2>
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<h3>Proc/lambda/Symbol/Method extensions</h3>
+<h3>
+<a name="proclambdasymbolmethod-extensions" class="anchor" href="#proclambdasymbolmethod-extensions"><span class="octicon octicon-link"></span></a>Proc/lambda/Symbol/Method extensions</h3>
 
 <ul>
 <li>call</li>
@@ -89,24 +94,27 @@
 <li>with_args</li>
 <li>flip</li>
 <li>curry</li>
-</ul><h4>alias :&lt; to Proc#call</h4>
+</ul><h4>
+<a name="alias--to-proccall" class="anchor" href="#alias--to-proccall"><span class="octicon octicon-link"></span></a>alias :&lt; to Proc#call</h4>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
   <span class="n">f</span> <span class="o">&lt;</span> <span class="ss">:foo</span> <span class="c1"># =&gt; "foo"</span>
 </pre></div>
 
-<h4>alias :+@ to Proc#to_proc</h4>
+<h4>
+<a name="alias--to-procto_proc" class="anchor" href="#alias--to-procto_proc"><span class="octicon octicon-link"></span></a>alias :+@ to Proc#to_proc</h4>
 
-<div class="highlight"><pre>  <span class="o">+</span><span class="ss">:to_s</span>           <span class="c1"># =&gt; #&lt;Proc:0x007ff78aadaa78&gt;</span>
+<div class="highlight highlight-ruby"><pre>  <span class="o">+</span><span class="ss">:to_s</span>           <span class="c1"># =&gt; #&lt;Proc:0x007ff78aadaa78&gt;</span>
   <span class="o">+</span><span class="ss">:to_s</span> <span class="o">&lt;</span> <span class="ss">:foo</span>    <span class="c1"># =&gt; "foo"</span>
 </pre></div>
 
-<h4>Proc#compose</h4>
+<h4>
+<a name="proccompose" class="anchor" href="#proccompose"><span class="octicon octicon-link"></span></a>Proc#compose</h4>
 
 <p>Returns new lambda which composed self and given function.
 A composed proc called with args, executes `self.(g(*args)).</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">to_s</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
   <span class="n">g</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">length</span> <span class="p">}</span>
 
   <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">compose</span> <span class="n">g</span>  <span class="c1"># =&gt; #&lt;Proc:0x007ff78aa2ab2&gt;</span>
@@ -115,16 +123,91 @@ A composed proc called with args, executes `self.(g(*args)).</p>
 
 <p>This method is aliased as <code>&lt;&lt;</code>.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span>          <span class="c1"># =&gt; f.compose(g)</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span>          <span class="c1"># =&gt; f.compose(g)</span>
   <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">g</span> <span class="o">&lt;</span> <span class="ss">:hoge</span>  <span class="c1"># =&gt; "44" ( == f.call(g.call(:hoge)) )</span>
 </pre></div>
 
-<h4>Proc#with_args</h4>
+<h4>
+<a name="proclift" class="anchor" href="#proclift"><span class="octicon octicon-link"></span></a>Proc#lift</h4>
+
+<p>Lift this function to the given context-function.
+The lifted fucntion can compose other function with context-fucntion.</p>
+
+<p>The given context-fuction used by <code>compose_with_lifting</code>
+to compose other fucntion.</p>
+
+<p>The context-funciton should recieve 2 arguments.</p>
+
+<ul>
+<li>first one is a function that reciver function of <code>compose_with_lifting</code> method.</li>
+<li>second arg is a result of g(x)
+
+<ul>
+<li>g is a function passed to <code>compose_with_lifting</code>
+</li>
+</ul>
+</li>
+</ul><h4>
+<a name="proccompose_with_lifting" class="anchor" href="#proccompose_with_lifting"><span class="octicon octicon-link"></span></a>Proc#compose_with_lifting</h4>
+
+<p>Compose self and given function on the context-function.
+The context-funciton is passed by <code>lift</code> method.</p>
+
+<p>This method returns composed funciton like bellow.</p>
+
+<div class="highlight highlight-ruby"><pre> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">args</span><span class="o">|</span>  <span class="n">context</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span> <span class="p">}</span>
+</pre></div>
+
+<p>For example, set context-function that logging the result.</p>
+
+<div class="highlight highlight-ruby"><pre>  <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:a</span> <span class="o">=&gt;</span> <span class="s2">"foo"</span><span class="p">}</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">length</span><span class="p">}</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="nb">hash</span><span class="o">[</span><span class="n">y</span><span class="o">]</span><span class="p">}</span>
+
+  <span class="n">ctx</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="p">,</span><span class="n">x</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="s2">"g(x)    -&gt; </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">"f(g(x)) -&gt; </span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">y</span>
+  <span class="p">}</span>
+
+  <span class="n">lifted</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">lift</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">lifted</span><span class="o">.</span><span class="n">compose_with_lifting</span> <span class="n">g</span>
+
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span>
+  <span class="c1">#=&gt;  g(x)    -&gt; foo # output by ctx</span>
+  <span class="c1">#=&gt;  f(g(x)) -&gt; 3   # output by ctx</span>
+  <span class="c1">#=&gt; 3</span>
+</pre></div>
+
+<p>if context-function does not given,
+default behaivior is compose function with checking g(x) is mzoro</p>
+
+<p>if g(x) is mzero, it does not call self and return g(x),
+otherwise returns f(g(x)).</p>
+
+<p>mzero means the object is nil or emtpy</p>
+
+<div class="highlight highlight-ruby"><pre>  <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:a</span> <span class="o">=&gt;</span> <span class="s2">"foo"</span><span class="p">}</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">length</span> <span class="p">}</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="nb">hash</span><span class="o">[</span><span class="n">y</span><span class="o">]</span><span class="p">}</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">compose_with_lifting</span> <span class="n">g</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span> <span class="c1"># =&gt; 3</span>
+  <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span> <span class="c1"># =&gt; nil (it does not called f)</span>
+</pre></div>
+
+<p>This method is aliased as <code>&lt;=</code>.</p>
+
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">&lt;=</span> <span class="n">g</span> <span class="c1"># =&gt; f.compose_with_lifting(g)</span>
+</pre></div>
+
+<h4>
+<a name="procwith_args" class="anchor" href="#procwith_args"><span class="octicon octicon-link"></span></a>Proc#with_args</h4>
 
 <p>Returns partially applied function that has 2nd and more parameters are
 fixed by given *args.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
 
   <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">with_args</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span>   <span class="c1"># =&gt; #&lt;Proc:0x007ff78a9c5ca0&gt;</span>
   <span class="n">h</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>                    <span class="c1"># =&gt; [:c, :a, :b] ( == f.call(:c, :a, :b) )</span>
@@ -132,18 +215,19 @@ fixed by given *args.</p>
 
 <p>This method is aliased as <code>*</code>.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">]</span><span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">]</span><span class="p">}</span>
 
   <span class="n">f</span> <span class="o">*</span> <span class="ss">:foo</span>          <span class="c1"># =&gt; #&lt;Proc:0x007ff78a987540&gt; (== f.with_args(:foo) )</span>
   <span class="n">f</span> <span class="o">*</span> <span class="ss">:foo</span> <span class="o">&lt;</span> <span class="ss">:bar</span>   <span class="c1"># =&gt; [:bar,  :foo] ( == f.with_args(:foo).call(:bar) )</span>
 </pre></div>
 
-<h4>Proc#flip</h4>
+<h4>
+<a name="procflip" class="anchor" href="#procflip"><span class="octicon octicon-link"></span></a>Proc#flip</h4>
 
 <p>Returns function whose parameter order swaped 1st for 2nd.
 A result of filped fuction is curried by Proc#curry.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="o">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">]</span><span class="p">}</span>
 
   <span class="n">h</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">flip</span>                    <span class="c1"># =&gt; #&lt;Proc:0x007ff78a942fa&gt;</span>
   <span class="n">h</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>  <span class="c1"># =&gt; [:b, :a, :c] (== f.curry.call(:b).call(:a).call(:b))</span>
@@ -152,7 +236,7 @@ A result of filped fuction is curried by Proc#curry.</p>
 
 <p>If arguments is var-args, pass explicitly arity to curring.</p>
 
-<div class="highlight"><pre>  <span class="nb">p</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span><span class="o">|*</span><span class="n">args</span><span class="o">|</span> <span class="n">args</span><span class="o">.</span><span class="n">inspect</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="nb">p</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span><span class="o">|*</span><span class="n">args</span><span class="o">|</span> <span class="n">args</span><span class="o">.</span><span class="n">inspect</span> <span class="p">}</span>
 
   <span class="nb">p</span><span class="o">.</span><span class="n">arity</span>                           <span class="c1"># =&gt; -1</span>
   <span class="nb">p</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:a</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:b</span><span class="p">)</span><span class="o">.</span><span class="p">(</span><span class="ss">:c</span><span class="p">)</span>      <span class="c1"># =&gt; "[:b, :a, :c]"</span>
@@ -163,29 +247,32 @@ A result of filped fuction is curried by Proc#curry.</p>
 
 <p>This method is aliased as <code>~@</code>.</p>
 
-<div class="highlight"><pre>  <span class="o">~</span><span class="n">f</span> <span class="c1"># =&gt;             #&lt;Proc:0x007ff78a8e22c&gt; (== f.filp)</span>
+<div class="highlight highlight-ruby"><pre>  <span class="o">~</span><span class="n">f</span> <span class="c1"># =&gt;             #&lt;Proc:0x007ff78a8e22c&gt; (== f.filp)</span>
   <span class="o">~</span><span class="n">f</span> <span class="o">&lt;</span> <span class="ss">:a</span> <span class="o">&lt;</span> <span class="ss">:b</span> <span class="o">&lt;</span> <span class="ss">:c</span>   <span class="c1"># =&gt; [:b, :a, :c] (== f.filp.call(:b).call(:a).call(:b))</span>
 
 </pre></div>
 
-<h3>Symbol extensions</h3>
+<h3>
+<a name="symbol-extensions" class="anchor" href="#symbol-extensions"><span class="octicon octicon-link"></span></a>Symbol extensions</h3>
 
 <ul>
 <li>to_method</li>
 <li>to_method_with_args</li>
-</ul><h4>Symbol#to_method</h4>
+</ul><h4>
+<a name="symbolto_method" class="anchor" href="#symbolto_method"><span class="octicon octicon-link"></span></a>Symbol#to_method</h4>
 
 <p>Symbol#to_method generates a function that extract Method object from given argument.
 This method is aliased as <code>-@</code>.</p>
 
-<div class="highlight"><pre>  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span>             <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
+<div class="highlight highlight-ruby"><pre>  <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span>             <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
   <span class="p">(</span><span class="o">-</span><span class="ss">:index</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 
   <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
   <span class="o">-</span><span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 </pre></div>
 
-<h4>Symbol#to_method_with_args</h4>
+<h4>
+<a name="symbolto_method_with_args" class="anchor" href="#symbolto_method_with_args"><span class="octicon octicon-link"></span></a>Symbol#to_method_with_args</h4>
 
 <p>Symbol#to_method_with_args generates a function that extract Method object from given object,
 and returns function is partially applied parameters by passed arguments.
@@ -193,73 +280,81 @@ It is same as Symbol#to_method with Proc#with_args.</p>
 
 <p>This method is aliased as <code>&amp;</code>.</p>
 
-<div class="highlight"><pre>  <span class="ss">:index</span><span class="o">.</span><span class="n">to_method_with_args</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span>                   <span class="c1">#  =&gt; #&lt;Proc:0x007ffef4886ff8</span>
+<div class="highlight highlight-ruby"><pre>  <span class="ss">:index</span><span class="o">.</span><span class="n">to_method_with_args</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span>                   <span class="c1">#  =&gt; #&lt;Proc:0x007ffef4886ff8</span>
   <span class="ss">:index</span><span class="o">.</span><span class="n">to_method_with_args</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"foobarbaz"</span><span class="p">)</span> <span class="c1">#  =&gt; 3 (== "foobarbaz".index("bar") )</span>
 
   <span class="ss">:index</span> <span class="o">&amp;</span> <span class="s2">"bar"</span>               <span class="c1">#  =&gt; #&lt;Proc:0x007ffef4886ff8</span>
   <span class="ss">:index</span> <span class="o">&amp;</span> <span class="s2">"bar"</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="c1">#  =&gt; 3 (== "foobarbaz".index("bar") )</span>
 </pre></div>
 
-<h3>Class extensions</h3>
+<h3>
+<a name="class-extensions" class="anchor" href="#class-extensions"><span class="octicon octicon-link"></span></a>Class extensions</h3>
 
 <ul>
 <li>alias instance_method, :/</li>
-</ul><div class="highlight"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
+</ul><div class="highlight highlight-ruby"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
 </pre></div>
 
-<h3>UnboundMethod extensions</h3>
+<h3>
+<a name="unboundmethod-extensions" class="anchor" href="#unboundmethod-extensions"><span class="octicon octicon-link"></span></a>UnboundMethod extensions</h3>
 
 <ul>
 <li>alias bind, :&lt;</li>
-</ul><div class="highlight"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span>                    <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
+</ul><div class="highlight highlight-ruby"><pre>  <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span>                    <span class="c1"># =&gt; #&lt;UnboundMethod: String#index&gt;</span>
   <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span>      <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
   <span class="nb">String</span> <span class="o">/</span> <span class="ss">:index</span> <span class="o">&lt;</span> <span class="s2">"foobarbaz"</span> <span class="o">&lt;</span> <span class="mi">3</span>  <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 </pre></div>
 
-<h3>Combinators</h3>
+<h3>
+<a name="combinators" class="anchor" href="#combinators"><span class="octicon octicon-link"></span></a>Combinators</h3>
 
 
 
 <ul>
 <li>ski combinator</li>
-</ul><h3>Object extensions</h3>
+</ul><h3>
+<a name="object-extensions" class="anchor" href="#object-extensions"><span class="octicon octicon-link"></span></a>Object extensions</h3>
 
 <ul>
 <li>obj.revapply(|&gt;)</li>
 <li>obj._</li>
 <li>obj.disjunction(f)</li>
-</ul><h4>Object#revapply</h4>
+</ul><h4>
+<a name="objectrevapply" class="anchor" href="#objectrevapply"><span class="octicon octicon-link"></span></a>Object#revapply</h4>
 
 <p><code>Object#revapply</code> is applies self to given proc/block.</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span>
 
   <span class="s2">"foo"</span><span class="o">.</span><span class="n">revapply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#  =&gt; "fooffoo" (== f.call("foo") )</span>
 </pre></div>
 
-<h4>Object#_</h4>
+<h4>
+<a name="object_" class="anchor" href="#object_"><span class="octicon octicon-link"></span></a>Object#_</h4>
 
 <p>Object#_ is shortcut to quickly extract Method object.</p>
 
-<div class="highlight"><pre><span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
+<div class="highlight highlight-ruby"><pre><span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span>         <span class="c1"># =&gt; #&lt;Method: String#index&gt;</span>
 <span class="s2">"foobarbaz"</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="s2">"bar"</span> <span class="c1"># =&gt; 3 (== "foobarbaz".index("bar") )</span>
 
 <span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">)</span>                    <span class="c1"># =&gt; #&lt;Method: Fixnum#&gt;=&gt;</span>
 <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="ss">:&gt;=</span><span class="p">))</span> <span class="c1"># =&gt; [1, 2]( = [1, 2].select{|n| 2 &gt;= n})</span>
 </pre></div>
 
-<h4>Object#disjunction</h4>
+<h4>
+<a name="objectdisjunction" class="anchor" href="#objectdisjunction"><span class="octicon octicon-link"></span></a>Object#disjunction</h4>
 
 <p><code>Object#disjunction</code> select self or result of applied self to given function.
 if f(self) is nil, returns self, otherwise return f(self).</p>
 
-<div class="highlight"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="kp">nil</span> <span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span>
+<div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">=</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="kp">nil</span> <span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span>
 
   <span class="mi">2</span><span class="o">.</span><span class="n">disjunction</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># =&gt; 2 (disjunction returns reciever object)</span>
   <span class="mi">3</span><span class="o">.</span><span class="n">disjunction</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># =&gt; 6 (disjunction returns f(3) )</span>
 </pre></div>
 
-<h2>Contributing</h2>
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <ol>
 <li>Fork it</li>
