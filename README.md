@@ -82,22 +82,70 @@ This method is aliased as `<<`.
   f << g < :hoge  # => "44" ( == f.call(g.call(:hoge)) )
 ```
 
+#### Proc#lift
+
+Lift this function to the given context-function.
+The lifted fucntion can compose other function with context-fucntion.
+
+The given context-fuction used by `compose_with_lifting`
+to compose other fucntion.
+
+The context-funciton should recieve 2 arguments.
+
+- first one is a function that reciver function of `compose_with_lifting` method.
+- second arg is a result of g(x)
+  - g is a function passed to `compose_with_lifting`
+
 
 #### Proc#compose_with_lifting
 
-compose self and give fuction with checking g(x) is mzero.
+Compose self and given function on the context-function.
+The context-funciton is passed by `lift` method.
+
+This method returns composed funciton like bellow.
+
+```ruby
+ lambda{|args|  context(self, g(*args)) }
+```
+
+For example, set context-function that logging the result.
+
+```ruby
+  hash = {:a => "foo"}
+  f = lambda{|x| x.length}
+  g = lambda{|y| hash[y]}
+
+  ctx = lambda{|f,x|
+    puts "g(x)    -> #{x}"
+    y = f.call(x)
+    puts "f(g(x)) -> #{y}"
+    y
+  }
+
+  lifted = f.lift(ctx)
+  h = lifted.compose_with_lifting g
+
+  h.(:a)
+  #=>  g(x)    -> foo # output by ctx
+  #=>  f(g(x)) -> 3   # output by ctx
+  #=> 3
+```
+
+if context-function does not given,
+default behaivior is compose function with checking g(x) is mzoro
+
 if g(x) is mzero, it does not call self and return g(x),
 otherwise returns f(g(x)).
 
 mzero means the object is nil or emtpy
 
 ```ruby
-   hash = {:a => "foo"}
-   f = lambda{|y| y.length }
-   g = lambda{|y| hash[y]}
-   h = f.compose_with_lifting g
-   h.(:a) # => 3
-   h.(:b) # => nil (it does not called f)
+  hash = {:a => "foo"}
+  f = lambda{|y| y.length }
+  g = lambda{|y| hash[y]}
+  h = f.compose_with_lifting g
+  h.(:a) # => 3
+  h.(:b) # => nil (it does not called f)
 ```
 
 This method is aliased as `<=`.
@@ -105,7 +153,6 @@ This method is aliased as `<=`.
 ```ruby
   f <= g # => f.compose_with_lifting(g)
 ```
-
 
 #### Proc#with_args
 
