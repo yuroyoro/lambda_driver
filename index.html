@@ -147,7 +147,43 @@ to compose other fucntion.</p>
 </li>
 </ul>
 </li>
-</ul><h4>
+</ul><p>If given arguments is Symbol, find context-function from
+default context-functions.</p>
+
+<ul>
+<li>:identify
+
+<ul>
+<li>this context nothing to do</li>
+</ul>
+</li>
+<li>:maybe
+
+<ul>
+<li>computations which may not return a result</li>
+</ul>
+</li>
+<li>:list
+
+<ul>
+<li>computations which can return multiple possible results</li>
+</ul>
+</li>
+<li>:reader
+
+<ul>
+<li>computations which read from a shared environment</li>
+</ul>
+</li>
+<li>:writer
+
+<ul>
+<li>computations which write data in addition to computing values</li>
+</ul>
+</li>
+</ul><p>see -&gt; LambdaDriver::Context</p>
+
+<h4>
 <a name="proccompose_with_lifting" class="anchor" href="#proccompose_with_lifting"><span class="octicon octicon-link"></span></a>Proc#compose_with_lifting</h4>
 
 <p>Compose self and given function on the context-function.
