@@ -96,6 +96,21 @@ The context-funciton should recieve 2 arguments.
 - second arg is a result of g(x)
   - g is a function passed to `compose_with_lifting`
 
+If given arguments is Symbol, find context-function from
+default context-functions.
+
+- :identify
+  - this context nothing to do
+- :maybe
+  - computations which may not return a result
+- :list
+  - computations which can return multiple possible results
+- :reader
+  - computations which read from a shared environment
+- :writer
+  - computations which write data in addition to computing values
+
+see -> LambdaDriver::Context
 
 #### Proc#compose_with_lifting
 

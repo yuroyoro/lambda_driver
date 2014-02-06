@@ -6,7 +6,7 @@ module LambdaDriver::Liftable
   #
   # This method returns composed funciton like bellow.
   #
-  #  lambda{|args|  context(self, g(*args)) }
+  #  lambda{|args|  context.call(self, context.call(g,*args) }
   #
   # For example, set context-function that logging the result.
   #
@@ -15,18 +15,17 @@ module LambdaDriver::Liftable
   #   g = lambda{|y| hash[y]}
   #
   #   ctx = lambda{|f,x|
-  #     puts "g(x)    -> #{x}"
-  #     y = f.call(x)
-  #     puts "f(g(x)) -> #{y}"
-  #     y
+  #     res = f.call(x)
+  #     puts "result -> #{res}"
+  #     res
   #   }
   #
   #   lifted = f.lift(ctx)
   #   h = lifted.compose_with_lifting g
   #
   #   h.(:a)
-  #   #=>  g(x)    -> foo
-  #   #=>  f(g(x)) -> 3
+  #   #=> result -> foo
+  #   #=> result -> 3
   #   #=> 3
   #
   # if context-function does not given,
@@ -49,9 +48,17 @@ module LambdaDriver::Liftable
   #   f <= g # => f.compose_with_lifting(g)
   #
   def compose_with_lifting(g)
-    context = lambda_driver_liftable_context
-
-    lambda{|*args| context.call(self.to_proc, g.to_proc.call(*args)) }.lift(context)
+    if @lambda_driver_lifted
+      ctx = @lambda_driver_liftable_context
+      self.compose(g).tap{|f|
+        f.instance_eval do
+          @lambda_driver_lifted = true
+          @lambda_driver_liftable_context = ctx
+        end
+      }
+    else
+      self.lift(DEFAULT_CONTEXT).compose_with_lifting(g)
+    end
   end
 
   # This is a default context-function.
@@ -69,10 +76,7 @@ module LambdaDriver::Liftable
   #   h.(:a) # => 3
   #   h.(:b) # => nil (it does not called f)
   #
-  DEFAULT_CONTEXT = lambda{|f, x|
-    mzero_method = x.respond_to?(:mzero?) ? :mzero? : :nil?
-    x.send(mzero_method) ? x : f.call(x)
-  }
+  DEFAULT_CONTEXT = LambdaDriver::Context[:maybe]
 
   # Lift this function to the given context-function.
   # The lifted fucntion can compose other function with context-fucntion.
@@ -85,9 +89,26 @@ module LambdaDriver::Liftable
   #  - second arg is a result of g(x)
   #  -- g is a function passed to `compose_with_lifting`
   #
-  def lift(g = DEFAULT_CONTEXT)
-    @lambda_driver_liftable_context = g
-    self
+  def lift(ctx = DEFAULT_CONTEXT, &block)
+    ctx = block_given? ? block : ctx
+    ctx = case ctx
+      when String, Symbol then LambdaDriver::Context[ctx]
+      else ctx
+    end
+
+    # do not lift same context again
+    return self if lambda_driver_lifted? && (ctx == lambda_driver_liftable_context)
+
+    lambda{|*args| ctx.call(self, *args) }.tap{|f|
+      f.instance_eval do
+        @lambda_driver_lifted = true
+        @lambda_driver_liftable_context = ctx
+      end
+    }
+  end
+
+  def lambda_driver_lifted?
+    @lambda_driver_lifted
   end
 
   def lambda_driver_liftable_context
@@ -95,7 +116,7 @@ module LambdaDriver::Liftable
   end
 
   def >=(g)
-    g.to_proc.lift(lambda_driver_liftable_context) <= self
+    g.to_proc.lift(lambda_driver_liftable_context).compose_with_lifting(self)
   end
 
   def self.included(klass)

@@ -50,11 +50,11 @@ shared_examples_for 'liftable' do
     it(" f.lift(ctx) >= g returns funciton that compose with ctx"){
       (subject.lift(ctx) >= g).should be_a_kind_of Proc
     }
-    it('"(f.flit(ctx) >= g).call(x) should be ctx(g, f(x))'){
-      (subject.lift(ctx) >= g).call(x).should == ctx.call(g, subject.to_proc.call(x))
+    it('"(f.lift(ctx) >= g).call(x) should be ctx(g, ctx(f, x))'){
+      (subject.lift(ctx) >= g).call(x).should == ctx.call(g, ctx.call(subject.to_proc,x))
     }
-    it('"(f.flit(ctx) >= g >= h).call(x) should be ctx(h, ctx(g, f(x)))'){
-      (subject.lift(ctx) >= g >= h).call(x).should == ctx.call(h, ctx.call(g, subject.to_proc.call(x)))
+    it('"(f.lift(ctx) >= g >= h).call(x) should be ctx(h, ctx(g, f(x)))'){
+      (subject.lift(ctx) >= g >= h).call(x).should == ctx.call(h, ctx.call(g, ctx.call(subject.to_proc, x)))
     }
   end
 end
