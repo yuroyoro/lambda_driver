@@ -5,6 +5,7 @@ shared_examples_for 'liftable' do
   it { should respond_to :compose_with_lifting }
   it { should respond_to :>= }
   it { should respond_to :<= }
+  it { should respond_to :ymsr}
 
   let(:x) { :foo }
   let(:y) { [1,2] }

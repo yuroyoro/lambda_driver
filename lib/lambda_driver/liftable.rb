@@ -121,5 +121,6 @@ module LambdaDriver::Liftable
 
   def self.included(klass)
     klass.send(:alias_method, :<=, :compose_with_lifting)
+    klass.send(:alias_method, :ymsr, :lift)
   end
 end
