@@ -169,7 +169,7 @@ This method is aliased as `<=`.
   f <= g # => f.compose_with_lifting(g)
 ```
 
-Example : try-chains
+##### Example : try-chains
 
 An annoying try chain like `arr.try(:first).try(:upcase).try(:to_sym)` is rewritten by following 
 
