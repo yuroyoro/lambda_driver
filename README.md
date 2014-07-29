@@ -175,10 +175,10 @@ An annoying try chain like `arr.try(:first).try(:upcase).try(:to_sym)` is rewrit
 
 ```ruby
   arr = ["foo", "bar"]
-  arr.try(:first >= :upcase >= :to_sym) # => :Foo
+  arr.try(&:first >= :upcase >= :to_sym) # => :Foo
   
   arr = [nil]
-  arr.try(:first >= :upcase >= :to_sym) # => nil
+  arr.try(&:first >= :upcase >= :to_sym) # => nil
 ```
 
 #### Proc#with_args
