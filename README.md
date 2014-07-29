@@ -169,6 +169,18 @@ This method is aliased as `<=`.
   f <= g # => f.compose_with_lifting(g)
 ```
 
+Example : try-chains
+
+An annoying try chain like `arr.try(:first).try(:upcase).try(:to_sym)` is rewritten by following 
+
+```ruby
+  arr = ["foo", "bar"]
+  arr.try(:first >= :upcase >= :to_sym) # => :Foo
+  
+  arr = [nil]
+  arr.try(:first >= :upcase >= :to_sym) # => nil
+```
+
 #### Proc#with_args
 
 Returns partially applied function that has 2nd and more parameters are
