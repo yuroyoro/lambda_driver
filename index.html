@@ -237,6 +237,17 @@ otherwise returns f(g(x)).</p>
 <div class="highlight highlight-ruby"><pre>  <span class="n">f</span> <span class="o">&lt;=</span> <span class="n">g</span> <span class="c1"># =&gt; f.compose_with_lifting(g)</span>
 </pre></div>
 
+<p>Example : try-chains</p>
+
+<p>An annoying try chain like <code>arr.try(:first).try(:upcase).try(:to_sym)</code> is rewritten by following </p>
+
+<div class="highlight highlight-ruby"><pre>  <span class="n">arr</span> <span class="o">=</span> <span class="o">[</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="o">]</span>
+  <span class="n">arr</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:first</span> <span class="o">&gt;=</span> <span class="ss">:upcase</span> <span class="o">&gt;=</span> <span class="ss">:to_sym</span><span class="p">)</span> <span class="c1"># =&gt; :Foo</span>
+
+  <span class="n">arr</span> <span class="o">=</span> <span class="o">[</span><span class="kp">nil</span><span class="o">]</span>
+  <span class="n">arr</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:first</span> <span class="o">&gt;=</span> <span class="ss">:upcase</span> <span class="o">&gt;=</span> <span class="ss">:to_sym</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
+</pre></div>
+
 <h4>
 <a name="procwith_args" class="anchor" href="#procwith_args"><span class="octicon octicon-link"></span></a>Proc#with_args</h4>
 
