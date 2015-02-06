@@ -147,7 +147,7 @@ For example, set context-function that logging the result.
 ```
 
 if context-function does not given,
-default behaivior is compose function with checking g(x) is mzoro
+default behaivior is compose function with checking g(x) is mzero
 
 if g(x) is mzero, it does not call self and return g(x),
 otherwise returns f(g(x)).
