@@ -85,12 +85,12 @@ This method is aliased as `<<`.
 #### Proc#lift
 
 Lift this function to the given context-function.
-The lifted fucntion can compose other function with context-fucntion.
+The lifted function can compose other function with context-function.
 
 The given context-fuction used by `compose_with_lifting`
-to compose other fucntion.
+to compose other function.
 
-The context-funciton should recieve 2 arguments.
+The context-function should recieve 2 arguments.
 
 - first one is a function that reciver function of `compose_with_lifting` method.
 - second arg is a result of g(x)
@@ -115,9 +115,9 @@ see -> LambdaDriver::Context
 #### Proc#compose_with_lifting
 
 Compose self and given function on the context-function.
-The context-funciton is passed by `lift` method.
+The context-function is passed by `lift` method.
 
-This method returns composed funciton like bellow.
+This method returns composed function like bellow.
 
 ```ruby
  lambda{|args|  context(self, g(*args)) }
