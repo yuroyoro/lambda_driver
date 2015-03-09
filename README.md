@@ -301,7 +301,7 @@ This method is aliased as `&`.
 ```ruby
   f = lambda{|x| x * 2 }
 
-  "foo".revapply(f) #  => "fooffoo" (== f.call("foo") )
+  "foo".revapply(f) #  => "foofoo" (== f.call("foo") )
 ```
 
 #### Object#_
@@ -324,7 +324,7 @@ if f(self) is nil, returns self, otherwise return f(self).
 ```ruby
   f = lambda{|x| x % 2 == 0 ? nil : x * 2}
 
-  2.disjunction(f) # => 2 (disjunction returns reciever object)
+  2.disjunction(f) # => 2 (disjunction returns receiver object)
   3.disjunction(f) # => 6 (disjunction returns f(3) )
 ```
 
