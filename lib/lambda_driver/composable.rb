@@ -3,7 +3,7 @@ module LambdaDriver::Composable
   # Returns new lambda which composed self and given function.
   # A composed proc called with args, executes `self.(g(*args)).
   #
-  #   f = lamdba{|x| x.to_s }
+  #   f = lambda{|x| x.to_s }
   #   g = lambda{|y| y.length }
   #   h = f compose g
   #   h.(:hoge) # => 4
