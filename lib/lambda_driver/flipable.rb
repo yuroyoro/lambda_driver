@@ -3,7 +3,7 @@ module LambdaDriver::Flipable
   # Returns function whose parameter order spawed 1st for 2nd.
   # A result of filped fuction is curried by Proc#curry.
   #
-  #   f = lamdba{|x, y, z| [x, y, z]}
+  #   f = lambda{|x, y, z| [x, y, z]}
   #   h = f.flip
   #   h.(:a).(:b).(:c) # => [:b, :a, :c]
   #
